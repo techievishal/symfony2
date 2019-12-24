@@ -1,0 +1,1 @@
+<?php echo $__env->make('partials.nav', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\flavaste\resources\views/partials/header.blade.php ENDPATH**/ ?>
