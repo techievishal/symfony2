@@ -37,6 +37,16 @@ class SetQuestionarie extends Component {
     this.setState({
      checked: e.target.checked
     })
+    if (e.target.checked){
+      //e.target.removeAttribute('checked');
+      e.target.value = "1";
+      
+   } else {
+    //e.target.setAttribute('checked', true);
+    e.target.value = "0";
+      
+   }
+
   }
 
   handleSubmit(e) { 
@@ -59,6 +69,7 @@ class SetQuestionarie extends Component {
         return response;
     }).then(json => {   
         if (json.data.success) {
+          alert(`Days configured!`);
           this.setState({
             formSubmitting: false,
             showForm:false          
@@ -104,15 +115,33 @@ return (
     <div><h3> Questionarie </h3></div>
     
         <form onSubmit={this.handleSubmit}>
-        <input type="hidden" name="questionSetID" id="questionSetID" value={days_of_week_set.id} />
+          
         <h6 class="card-subtitle mb-2 text-muted">What days?</h6>
         <p class="card-text">
         <div className="col-md-8">
-        {days_of_week.map((days, j) => (
-        <label class="checkbox-inline mr-2">
-        <input type="checkbox" name={days} value={days} id={days} checked={days_of_week_set[days]} onClick={this.handleCheck}  />{days}
-        </label>
-        ))}
+        {days_of_week_set ? (
+<div>
+{days_of_week.map((days, j) => (
+  <label class="checkbox-inline mr-2">
+  <input type="checkbox" name={days} defaultValue={days_of_week_set[days]} id={days} defaultChecked={days_of_week_set[days]} onChange={this.handleCheck.bind(this)}  />{days}
+  </label>
+  ))}
+  <input type="hidden" name="questionSetID" id="questionSetID" value={days_of_week_set.id} />
+</div>
+) : (
+
+<div>
+{days_of_week.map((days, j) => (
+  <label class="checkbox-inline mr-2">
+  <input type="checkbox" name={days}  id={days}  onChange={this.handleCheck.bind(this)}  />{days}
+  </label>
+  ))}
+  <input type="hidden" name="questionSetID" id="questionSetID" value="" />
+
+</div>
+
+
+        )}
         </div>
 <div className="col-md-6">
 <button type="button" className="btn btn-secondary  float-right" data-dismiss="modal">Close</button>
