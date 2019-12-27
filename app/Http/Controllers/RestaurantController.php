@@ -71,16 +71,20 @@ class RestaurantController extends Controller
 
     public function updatequestions(Request $request)    {
         $weekdaysList = array();
-        $days = SchedulerQuestionnaireWeekOption::firstOrNew(array('id' => $request->id));
-        $days->Sunday = $request->Sunday;
-        $days->Monday = $request->Monday;
-        $days->Tuesday = $request->Tuesday;
-        $days->Wednesday = $request->Wednesday;
-        $days->Thursday = $request->Thursday;
-        $days->Friday = $request->Friday;
-        $days->Saturday = $request->Saturday;
+        $days = SchedulerQuestionnaireWeekOption::firstOrNew(array('id' => $request->questionSetID));
+        $days->Sunday = (null !== $request->Sunday) ? $request->Sunday: "0";
+        $days->Monday = (null !== $request->Monday) ? $request->Monday: "0";
+        $days->Tuesday = (null !== $request->Tuesday) ? $request->Tuesday: "0";
+        $days->Wednesday = (null !== $request->Wednesday) ? $request->Wednesday: "0";
+        $days->Thursday = (null !== $request->Thursday) ? $request->Thursday: "0";
+        $days->Friday = (null !== $request->Friday) ? $request->Friday: "0";
+        $days->Saturday = (null !== $request->Saturday) ? $request->Saturday: "0";
         $days->restaurant_id = $request->restaurant_id;
         $days->save();
+
+        return response()->json([
+            'success' => true,
+        ],201);
 
     }
 }
